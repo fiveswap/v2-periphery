@@ -22,49 +22,49 @@ describe('FiveswapV2Migrator', () => {
   const [wallet] = provider.getWallets()
   const loadFixture = createFixtureLoader(provider, [wallet])
 
-  let WETHPartner: Contract
-  let WETHPair: Contract
+  let WPENPartner: Contract
+  let WPENPair: Contract
   let router: Contract
   let migrator: Contract
-  let WETHExchangeV1: Contract
+  let WPENExchangeV1: Contract
   beforeEach(async function() {
     const fixture = await loadFixture(v2Fixture)
-    WETHPartner = fixture.WETHPartner
-    WETHPair = fixture.WETHPair
+    WPENPartner = fixture.WPENPartner
+    WPENPair = fixture.WPENPair
     router = fixture.router01 // we used router01 for this contract
     migrator = fixture.migrator
-    WETHExchangeV1 = fixture.WETHExchangeV1
+    WPENExchangeV1 = fixture.WPENExchangeV1
   })
 
   it('migrate', async () => {
-    const WETHPartnerAmount = expandTo18Decimals(1)
-    const ETHAmount = expandTo18Decimals(4)
-    await WETHPartner.approve(WETHExchangeV1.address, MaxUint256)
-    await WETHExchangeV1.addLiquidity(bigNumberify(1), WETHPartnerAmount, MaxUint256, {
+    const WPENPartnerAmount = expandTo18Decimals(1)
+    const PENAmount = expandTo18Decimals(4)
+    await WPENPartner.approve(WPENExchangeV1.address, MaxUint256)
+    await WPENExchangeV1.addLiquidity(bigNumberify(1), WPENPartnerAmount, MaxUint256, {
       ...overrides,
-      value: ETHAmount
+      value: PENAmount
     })
-    await WETHExchangeV1.approve(migrator.address, MaxUint256)
+    await WPENExchangeV1.approve(migrator.address, MaxUint256)
     const expectedLiquidity = expandTo18Decimals(2)
-    const WETHPairToken0 = await WETHPair.token0()
+    const WPENPairToken0 = await WPENPair.token0()
     await expect(
-      migrator.migrate(WETHPartner.address, WETHPartnerAmount, ETHAmount, wallet.address, MaxUint256, overrides)
+      migrator.migrate(WPENPartner.address, WPENPartnerAmount, PENAmount, wallet.address, MaxUint256, overrides)
     )
-      .to.emit(WETHPair, 'Transfer')
+      .to.emit(WPENPair, 'Transfer')
       .withArgs(AddressZero, AddressZero, MINIMUM_LIQUIDITY)
-      .to.emit(WETHPair, 'Transfer')
+      .to.emit(WPENPair, 'Transfer')
       .withArgs(AddressZero, wallet.address, expectedLiquidity.sub(MINIMUM_LIQUIDITY))
-      .to.emit(WETHPair, 'Sync')
+      .to.emit(WPENPair, 'Sync')
       .withArgs(
-        WETHPairToken0 === WETHPartner.address ? WETHPartnerAmount : ETHAmount,
-        WETHPairToken0 === WETHPartner.address ? ETHAmount : WETHPartnerAmount
+        WPENPairToken0 === WPENPartner.address ? WPENPartnerAmount : PENAmount,
+        WPENPairToken0 === WPENPartner.address ? PENAmount : WPENPartnerAmount
       )
-      .to.emit(WETHPair, 'Mint')
+      .to.emit(WPENPair, 'Mint')
       .withArgs(
         router.address,
-        WETHPairToken0 === WETHPartner.address ? WETHPartnerAmount : ETHAmount,
-        WETHPairToken0 === WETHPartner.address ? ETHAmount : WETHPartnerAmount
+        WPENPairToken0 === WPENPartner.address ? WPENPartnerAmount : PENAmount,
+        WPENPairToken0 === WPENPartner.address ? PENAmount : WPENPartnerAmount
       )
-    expect(await WETHPair.balanceOf(wallet.address)).to.eq(expectedLiquidity.sub(MINIMUM_LIQUIDITY))
+    expect(await WPENPair.balanceOf(wallet.address)).to.eq(expectedLiquidity.sub(MINIMUM_LIQUIDITY))
   })
 })

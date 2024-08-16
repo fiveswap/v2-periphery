@@ -15,23 +15,23 @@ library FiveswapV2Library {
     }
 
     //calculates the CREATE2 address for a pair without making any external calls
-    function pairFor(address factory, address tokenA, address tokenB) internal pure returns (address pair) {
-        (address token0, address token1) = sortTokens(tokenA, tokenB);
-        pair = address(uint(keccak256(abi.encodePacked(
-                hex'ff',
-                factory,
-                keccak256(abi.encodePacked(token0, token1)),
-                hex'7a258225ea5f60ea5007f427edc018ed9176fc900d6d15b23aebe809d95bbb36' // init code hash
-            ))));
-    }
-
-    // function pairFor(
-    //     address factory,
-    //     address tokenA,
-    //     address tokenB
-    // ) internal view returns (address pair) {
-    //     pair = IFiveswapV2Factory(factory).getPair(tokenA, tokenB);
+    // function pairFor(address factory, address tokenA, address tokenB) internal pure returns (address pair) {
+    //     (address token0, address token1) = sortTokens(tokenA, tokenB);
+    //     pair = address(uint(keccak256(abi.encodePacked(
+    //             hex'ff',
+    //             factory,
+    //             keccak256(abi.encodePacked(token0, token1)),
+    //             hex'7a258225ea5f60ea5007f427edc018ed9176fc900d6d15b23aebe809d95bbb36' // init code hash
+    //         ))));
     // }
+
+    function pairFor(
+        address factory,
+        address tokenA,
+        address tokenB
+    ) internal view returns (address pair) {
+        pair = IFiveswapV2Factory(factory).getPair(tokenA, tokenB);
+    }
 
     // fetches and sorts the reserves for a pair
     function getReserves(address factory, address tokenA, address tokenB) internal view returns (uint reserveA, uint reserveB) {
