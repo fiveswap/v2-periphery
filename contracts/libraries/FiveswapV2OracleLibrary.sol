@@ -5,7 +5,8 @@ import '.deps/npm/@fiveswap/lib/contracts/libraries/FixedPoint.sol';
 
 // library with helper methods for oracles that are concerned with computing average prices
 library FiveswapV2OracleLibrary {
-    using FixedPoint for *;
+    using FixedPoint for uint256;
+    using FixedPoint for uint112;
 
     // helper function that returns the current block timestamp within the range of uint32, i.e. [0, 2**32 - 1]
     function currentBlockTimestamp() internal view returns (uint32) {
