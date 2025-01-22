@@ -1,0 +1,58 @@
+# Ignore node_modules (should not be included in the package)
+node_modules/
+
+# Ignore build tools and configs
+*.log
+*.lock
+*.env
+.vscode/
+.idea/
+.DS_Store
+.mocharc.json
+*.iml
+package-lock.json
+tsconfig.json
+
+# Ignore source control and metadata files
+.git/
+.gitignore
+.gitkeep
+.gitattributes
+.npmignore
+
+# Ignore tests and documentation files
+tests/
+test/
+__tests__/
+coverage/
+*.spec.js
+*.test.js
+*.snap
+
+# Ignore build artifacts for local development
+build
+dist/
+public/
+temp/
+.tmp/
+
+# Ignore TypeScript source files if transpiled output is included
+src/
+*.ts
+*.tsx
+
+# Ignore example or demo files
+example/
+demo/
+
+# Ignore Babel, Webpack, or other dev configurations
+babel.config.js
+webpack.config.js
+rollup.config.js
+tsconfig.json
+.eslintrc
+.prettierrc
+.waffle.json
+
+# Include only necessary assets
+!dist/

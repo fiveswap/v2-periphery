@@ -1,7 +1,7 @@
 pragma solidity >=0.5.0;
 
-import 'https://github.com/fiveswap/v2-core/blob/main/contracts/interfaces/IFiveswapV2Pair.sol';
-import 'https://github.com/fiveswap/v2-core/blob/main/contracts/interfaces/IFiveswapV2Factory.sol';
+import '@fiveswap/v2-core/contracts/interfaces/IFiveswapV2Factory.sol';
+import '@fiveswap/v2-core/contracts/interfaces/IFiveswapV2Pair.sol';
 import "./SafeMath.sol";
 
 library FiveswapV2Library {

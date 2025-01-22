@@ -1,6 +1,6 @@
 {
   "name": "@fiveswap/v2-periphery",
-  "version": "1.1.0-beta.0",
+  "version": "1.0.1",
   "description": "🎚 Peripheral smart contracts for interacting with Fiveswap V2",
   "engines": {
     "node": ">=10"
@@ -10,13 +10,16 @@
     "type": "git",
     "url": "https://github.com/Fiveswap/v2-periphery"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "build",
     "contracts"
   ],
   "dependencies": {
-    "@fiveswap/lib": "4.0.1-alpha",
-    "@fiveswap/v2-core": "1.0.0"
+    "@fiveswap/lib": "^1.0.1",
+    "@fiveswap/v2-core": "^1.0.2"
   },
   "devDependencies": {
     "@types/chai": "^4.2.6",
@@ -32,17 +35,6 @@
     "ts-node": "^8.5.4",
     "typescript": "^3.7.3"
   },
-  "scripts": {
-    "lint": "yarn prettier ./test/*.ts --check",
-    "lint:fix": "yarn prettier ./test/*.ts --write",
-    "clean": "rimraf ./build/",
-    "copy-v1-artifacts": "ncp ./buildV1 ./build",
-    "precompile": "yarn clean",
-    "compile": "waffle .waffle.json",
-    "postcompile": "yarn copy-v1-artifacts",
-    "pretest": "yarn compile",
-    "test": "mocha",
-    "prepublishOnly": "yarn test"
-  },
+  "scripts": {},
   "license": "GPL-3.0-or-later"
 }

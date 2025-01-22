@@ -1,7 +1,7 @@
 pragma solidity >=0.5.0;
 
-import 'https://github.com/fiveswap/v2-core/blob/main/contracts/interfaces/IFiveswapV2Pair.sol';
-import '.deps/npm/@fiveswap/lib/contracts/libraries/FixedPoint.sol';
+import '@fiveswap/v2-core/contracts/interfaces/IFiveswapV2Pair.sol';
+import '@fiveswap/lib/contracts/libraries/FixedPoint.sol';
 
 // library with helper methods for oracles that are concerned with computing average prices
 library FiveswapV2OracleLibrary {

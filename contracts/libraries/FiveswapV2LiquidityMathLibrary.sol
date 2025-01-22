@@ -1,9 +1,9 @@
 pragma solidity >=0.5.0;
 
-import 'https://github.com/fiveswap/v2-core/blob/main/contracts/interfaces/IFiveswapV2Pair.sol';
-import 'https://github.com/fiveswap/v2-core/blob/main/contracts/interfaces/IFiveswapV2Factory.sol';
-import '.deps/npm/@fiveswap/lib/contracts/libraries/Babylonian.sol';
-import '.deps/npm/@fiveswap/lib/contracts/libraries/FullMath.sol';
+import '@fiveswap/v2-core/contracts/interfaces/IFiveswapV2Factory.sol';
+import '@fiveswap/v2-core/contracts/interfaces/IFiveswapV2Pair.sol';
+import '@fiveswap/lib/contracts/libraries/Babylonian.sol';
+import '@fiveswap/lib/contracts/libraries/FullMath.sol';
 
 import './SafeMath.sol';
 import './FiveswapV2Library.sol';

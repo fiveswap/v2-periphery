@@ -1,7 +1,6 @@
 pragma solidity =0.6.6;
 
-import 'https://github.com/fiveswap/v2-core/blob/main/contracts/libraries/TransferHelper.sol';
-
+import '@fiveswap/v2-core/contracts/libraries/TransferHelper.sol';
 import './interfaces/IFiveswapV2Migrator.sol';
 import './interfaces/V1/IFiveswapV1Factory.sol';
 import './interfaces/V1/IFiveswapV1Exchange.sol';
