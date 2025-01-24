@@ -290,7 +290,7 @@ contract FiveswapV2Router02 is IFiveswapV2Router02 {
             token,
             to,
             IERC20(token).balanceOf(address(this))
-        ); //TBD about how to tackle this going forward
+        ); 
         IWPEN(WPEN).withdraw(amountPEN);
         TransferHelper.safeTransferPEN(to, amountPEN);
     }
