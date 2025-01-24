@@ -277,6 +277,8 @@ contract FiveswapV2Router02 is IFiveswapV2Router02 {
         address to,
         uint deadline
     ) public virtual override ensure(deadline) returns (uint amountPEN) {
+        uint initialBalance = IERC20(token).balanceOf(address(this));
+
         (, amountPEN) = removeLiquidity(
             token,
             WPEN,
@@ -286,11 +288,15 @@ contract FiveswapV2Router02 is IFiveswapV2Router02 {
             address(this),
             deadline
         );
-        TransferHelper.safeTransfer(
-            token,
-            to,
-            IERC20(token).balanceOf(address(this))
-        ); //TBD about how to tackle this going forward
+        uint finalBalance = IERC20(token).balanceOf(address(this));
+        uint receivedAmount = finalBalance > initialBalance
+            ? finalBalance - initialBalance
+            : 0;
+
+        // Ensure the received amount is greater than 0
+        require(receivedAmount > 0, "No tokens received");
+
+        TransferHelper.safeTransfer(token, to, receivedAmount);
         IWPEN(WPEN).withdraw(amountPEN);
         TransferHelper.safeTransferPEN(to, amountPEN);
     }
