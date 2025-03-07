@@ -1,22 +1,22 @@
 {
-  "name": "@fiveswap/v2-periphery",
+  "name": "@pentaswap/v2-periphery",
   "version": "1.1.0-beta.0",
-  "description": "🎚 Peripheral smart contracts for interacting with Fiveswap V2",
+  "description": "🎚 Peripheral smart contracts for interacting with Pentaswap V2",
   "engines": {
     "node": ">=10"
   },
-  "homepage": "https://fiveswap.org",
+  "homepage": "https://pentaswap.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Fiveswap/v2-periphery"
+    "url": "https://github.com/Pentaswap/v2-periphery"
   },
   "files": [
     "build",
     "contracts"
   ],
   "dependencies": {
-    "@fiveswap/lib": "4.0.1-alpha",
-    "@fiveswap/v2-core": "1.0.0"
+    "@pentaswap/lib": "4.0.1-alpha",
+    "@pentaswap/v2-core": "1.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.6",

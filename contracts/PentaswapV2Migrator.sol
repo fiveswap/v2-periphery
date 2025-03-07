@@ -1,20 +1,20 @@
 pragma solidity =0.6.6;
 
-import 'https://github.com/fiveswap/v2-core/blob/main/contracts/libraries/TransferHelper.sol';
+import 'https://github.com/pentaswap/v2-core/blob/main/contracts/libraries/TransferHelper.sol';
 
-import './interfaces/IFiveswapV2Migrator.sol';
-import './interfaces/V1/IFiveswapV1Factory.sol';
-import './interfaces/V1/IFiveswapV1Exchange.sol';
-import './interfaces/IFiveswapV2Router01.sol';
+import './interfaces/IPentaswapV2Migrator.sol';
+import './interfaces/V1/IPentaswapV1Factory.sol';
+import './interfaces/V1/IPentaswapV1Exchange.sol';
+import './interfaces/IPentaswapV2Router01.sol';
 import './interfaces/IERC20.sol';
 
-contract FiveswapV2Migrator is IFiveswapV2Migrator {
-    IFiveswapV1Factory immutable factoryV1;
-    IFiveswapV2Router01 immutable router;
+contract PentaswapV2Migrator is IPentaswapV2Migrator {
+    IPentaswapV1Factory immutable factoryV1;
+    IPentaswapV2Router01 immutable router;
 
     constructor(address _factoryV1, address _router) public {
-        factoryV1 = IFiveswapV1Factory(_factoryV1);
-        router = IFiveswapV2Router01(_router);
+        factoryV1 = IPentaswapV1Factory(_factoryV1);
+        router = IPentaswapV2Router01(_router);
     }
 
     // needs to accept PEN from any v1 exchange and the router. ideally this could be enforced, as in the router,
@@ -25,7 +25,7 @@ contract FiveswapV2Migrator is IFiveswapV2Migrator {
         external
         override
     {
-        IFiveswapV1Exchange exchangeV1 = IFiveswapV1Exchange(factoryV1.getExchange(token));
+        IPentaswapV1Exchange exchangeV1 = IPentaswapV1Exchange(factoryV1.getExchange(token));
         uint liquidityV1 = exchangeV1.balanceOf(msg.sender);
         require(exchangeV1.transferFrom(msg.sender, address(this), liquidityV1), 'TRANSFER_FROM_FAILED');
         (uint amountPENV1, uint amountTokenV1) = exchangeV1.removeLiquidity(liquidityV1, 1, 1, uint(-1));

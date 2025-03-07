@@ -1,16 +1,16 @@
 pragma solidity >=0.5.0;
 
-import 'https://github.com/fiveswap/v2-core/blob/main/contracts/interfaces/IFiveswapV2Pair.sol';
-import 'https://github.com/fiveswap/v2-core/blob/main/contracts/interfaces/IFiveswapV2Factory.sol';
-import '.deps/npm/@fiveswap/lib/contracts/libraries/Babylonian.sol';
-import '.deps/npm/@fiveswap/lib/contracts/libraries/FullMath.sol';
+import 'https://github.com/pentaswap/v2-core/blob/main/contracts/interfaces/IPentaswapV2Pair.sol';
+import 'https://github.com/pentaswap/v2-core/blob/main/contracts/interfaces/IPentaswapV2Factory.sol';
+import '.deps/npm/@pentaswap/lib/contracts/libraries/Babylonian.sol';
+import '.deps/npm/@pentaswap/lib/contracts/libraries/FullMath.sol';
 
 import './SafeMath.sol';
-import './FiveswapV2Library.sol';
+import './PentaswapV2Library.sol';
 
 // library containing some math for dealing with the liquidity shares of a pair, e.g. computing their exact value
 // in terms of the underlying tokens
-library FiveswapV2LiquidityMathLibrary {
+library PentaswapV2LiquidityMathLibrary {
     using SafeMath for uint256;
 
     // computes the direction and magnitude of the profit-maximizing trade
@@ -48,9 +48,9 @@ library FiveswapV2LiquidityMathLibrary {
         uint256 truePriceTokenB
     ) view internal returns (uint256 reserveA, uint256 reserveB) {
         // first get reserves before the swap
-        (reserveA, reserveB) = FiveswapV2Library.getReserves(factory, tokenA, tokenB);
+        (reserveA, reserveB) = PentaswapV2Library.getReserves(factory, tokenA, tokenB);
 
-        require(reserveA > 0 && reserveB > 0, 'FiveswapV2ArbitrageLibrary: ZERO_PAIR_RESERVES');
+        require(reserveA > 0 && reserveB > 0, 'PentaswapV2ArbitrageLibrary: ZERO_PAIR_RESERVES');
 
         // then compute how much to swap to arb to the true price
         (bool aToB, uint256 amountIn) = computeProfitMaximizingTrade(truePriceTokenA, truePriceTokenB, reserveA, reserveB);
@@ -61,11 +61,11 @@ library FiveswapV2LiquidityMathLibrary {
 
         // now affect the trade to the reserves
         if (aToB) {
-            uint amountOut = FiveswapV2Library.getAmountOut(amountIn, reserveA, reserveB);
+            uint amountOut = PentaswapV2Library.getAmountOut(amountIn, reserveA, reserveB);
             reserveA += amountIn;
             reserveB -= amountOut;
         } else {
-            uint amountOut = FiveswapV2Library.getAmountOut(amountIn, reserveB, reserveA);
+            uint amountOut = PentaswapV2Library.getAmountOut(amountIn, reserveB, reserveA);
             reserveB += amountIn;
             reserveA -= amountOut;
         }
@@ -103,9 +103,9 @@ library FiveswapV2LiquidityMathLibrary {
         address tokenB,
         uint256 liquidityAmount
     ) internal view returns (uint256 tokenAAmount, uint256 tokenBAmount) {
-        (uint256 reservesA, uint256 reservesB) = FiveswapV2Library.getReserves(factory, tokenA, tokenB);
-        IFiveswapV2Pair pair = IFiveswapV2Pair(FiveswapV2Library.pairFor(factory, tokenA, tokenB));
-        bool feeOn = IFiveswapV2Factory(factory).feeTo() != address(0);
+        (uint256 reservesA, uint256 reservesB) = PentaswapV2Library.getReserves(factory, tokenA, tokenB);
+        IPentaswapV2Pair pair = IPentaswapV2Pair(PentaswapV2Library.pairFor(factory, tokenA, tokenB));
+        bool feeOn = IPentaswapV2Factory(factory).feeTo() != address(0);
         uint kLast = feeOn ? pair.kLast() : 0;
         uint totalSupply = pair.totalSupply();
         return computeLiquidityValue(reservesA, reservesB, totalSupply, liquidityAmount, feeOn, kLast);
@@ -124,8 +124,8 @@ library FiveswapV2LiquidityMathLibrary {
         uint256 tokenAAmount,
         uint256 tokenBAmount
     ) {
-        bool feeOn = IFiveswapV2Factory(factory).feeTo() != address(0);
-        IFiveswapV2Pair pair = IFiveswapV2Pair(FiveswapV2Library.pairFor(factory, tokenA, tokenB));
+        bool feeOn = IPentaswapV2Factory(factory).feeTo() != address(0);
+        IPentaswapV2Pair pair = IPentaswapV2Pair(PentaswapV2Library.pairFor(factory, tokenA, tokenB));
         uint kLast = feeOn ? pair.kLast() : 0;
         uint totalSupply = pair.totalSupply();
 

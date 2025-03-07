@@ -1,6 +1,6 @@
 pragma solidity >=0.6.2;
 
-interface IFiveswapV2Router01 {
+interface IPentaswapV2Router01 {
     function factory() external pure returns (address);
     function WPEN() external pure returns (address);
 

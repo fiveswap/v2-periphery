@@ -1,8 +1,8 @@
 pragma solidity >=0.6.2;
 
-import './IFiveswapV2Router01.sol';
+import './IPentaswapV2Router01.sol';
 
-interface IFiveswapV2Router02 is IFiveswapV2Router01 {
+interface IPentaswapV2Router02 is IPentaswapV2Router01 {
     function removeLiquidityPENSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
